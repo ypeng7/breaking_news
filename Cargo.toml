@@ -13,3 +13,6 @@ hyper-tls = "*"
 tokio = "*"
 futures = "*"
 select = "*"
+pretty_env_logger = "*"
+reqwest = "*"
+serde = {version = "1.0", features = ["derive"]}
