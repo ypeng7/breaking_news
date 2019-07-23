@@ -34,6 +34,33 @@ fn main() -> Result<(), Error> {
         println!("{}. {}", i-3, news.get(i).unwrap());
         println!("\n");
     }
+
+    let size: i32 = 10;
+    for x in 0..10 {
+        for y in 0..4*10 {
+            let dist1 = (((x - size).pow(2) + (y - size).pow(2)) as f64).sqrt();
+            let dist2 = (((x - size).pow(2) + (y - 3*size).pow(2)) as f64).sqrt();
+
+            if dist1 < (size as f64) + 0.5 || dist2 < (size as f64) + 0.5 {
+                print!("*");
+            } else {
+                print!(" ");
+            }
+        }
+        print!("\n");
+    }
+
+    for x in 1..2*size {
+        for y in 0..x {
+            print!(" ");
+        }
+
+        for y in 0..(4*size+1 -2*x) {
+            print!("*");
+        }
+        print!("\n");
+    }
+
     Ok(())
 }
 
