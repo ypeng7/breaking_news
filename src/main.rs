@@ -15,23 +15,30 @@ use select::predicate::{Name};
 
 fn main() -> Result<(), Error> {
     let requests_url = "https://s.weibo.com/top/summary?cate=realtimehot";
-    let resp = reqwest::get(requests_url).unwrap();
     let mut news = Vec::new();
+    let mut urls = Vec::new();
+    let resp = reqwest::get(requests_url).unwrap();
     Document::from_read(resp)
         .unwrap()
         .find(Name("a"))
         .for_each(|x| news.push(x.text()));
+    let resp = reqwest::get(requests_url).unwrap();
+    Document::from_read(resp)
+        .unwrap()
+        .find(Name("a"))
+        .filter_map(|n| n.attr("href"))
+        .for_each(|x| urls.push(x.to_string()));
 
-    println!("微博热搜榜Top30");
+    println!("微博热搜榜Top20");
     println!("----------");
     for i in 0..news.len() {
         if i < 4 {
             continue;
         }
-        if i > 33 {
+        if i > 23 {
             break;
         }
-        println!("{}. {}", i-3, news.get(i).unwrap());
+        println!("{}. {} https://s.weibo.com{}", i-3, news.get(i).unwrap(), urls.get(i).unwrap());
         println!("\n");
     }
 
