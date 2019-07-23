@@ -11,7 +11,7 @@ extern crate select;
 
 mod color;
 
-use color::Colorized;
+use crate::color::Colorized;
 
 use reqwest::Error;
 use select::document::Document;
@@ -42,7 +42,10 @@ fn main() -> Result<(), Error> {
         if i > 23 {
             break;
         }
-        println!("{}. {} https://s.weibo.com{}", i-3, news.get(i).unwrap(), urls.get(i).unwrap());
+        let topic = format!("{}. {}", i-3, news.get(i).unwrap()).to_string().on_yellow();
+        println!("{}", topic);
+        // println!("{}. {}", i-3, news.get(i).unwrap());
+        println!("https://s.weibo.com{}", urls.get(i).unwrap());
         println!("\n");
     }
 
@@ -63,12 +66,12 @@ fn main() -> Result<(), Error> {
     }
 
     for x in 1..2*size {
-        for y in 0..x {
+        for _y in 0..x {
             print!(" ");
         }
 
-        for y in 0..(4*size+1 -2*x) {
-            print!("*");
+        for _y in 0..(4*size+1 -2*x) {
+            print!("{}", star);
         }
         print!("\n");
     }

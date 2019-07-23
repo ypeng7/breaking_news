@@ -6,7 +6,7 @@
  * Last Modified By  : Yue Peng <yuepaang@gmail.com>
 
  */
-use std::prelude::*;
+
 use std::fmt;
 
 pub struct ColoredString {
@@ -85,10 +85,10 @@ impl ColoredString {
 
 impl fmt::Display for ColoredString {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let mut input = &self.input.clone();
-        try!(f.write_str(&self.compute_style()));
-        try!(f.write_str(input));
-        try!(f.write_str("\x1B[0m"));
+        let input = &self.input.clone();
+        r#try!(f.write_str(&self.compute_style()));
+        r#try!(f.write_str(input));
+        r#try!(f.write_str("\x1B[0m"));
         Ok(())
     }
 }
