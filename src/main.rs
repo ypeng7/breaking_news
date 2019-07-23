@@ -2,18 +2,38 @@
  * File              : src/main.rs
  * Author            : Yue Peng <yuepaang@gmail.com>
  * Date              : 2019-07-22 17:11:36
- * Last Modified Date: 2019-07-22 17:11:36
+ * Last Modified Date: 2019-07-23 15:12:55
  * Last Modified By  : Yue Peng <yuepaang@gmail.com>
 
  */
 extern crate reqwest;
+extern crate select;
+
 use reqwest::Error;
+use select::document::Document;
+use select::predicate::{Name};
 
 fn main() -> Result<(), Error> {
     let requests_url = "https://s.weibo.com/top/summary?cate=realtimehot";
-    let body = reqwest::get(requests_url)?
-        .text()?;
-    println!("{:?}", body);
+    let resp = reqwest::get(requests_url).unwrap();
+    let mut news = Vec::new();
+    Document::from_read(resp)
+        .unwrap()
+        .find(Name("a"))
+        .for_each(|x| news.push(x.text()));
+
+    println!("微博热搜榜Top30");
+    println!("----------");
+    for i in 0..news.len() {
+        if i < 4 {
+            continue;
+        }
+        if i > 33 {
+            break;
+        }
+        println!("{}. {}", i-3, news.get(i).unwrap());
+        println!("\n");
+    }
     Ok(())
 }
 
