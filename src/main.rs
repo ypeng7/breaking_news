@@ -42,7 +42,7 @@ fn main() -> Result<(), Error> {
         if i > 23 {
             break;
         }
-        let topic = format!("{}. {}", i-3, news.get(i).unwrap()).to_string().on_yellow();
+        let topic = format!("{}. {}", i-3, news.get(i).unwrap()).to_string().on_color("yellow");
         println!("{}", topic);
         // println!("{}. {}", i-3, news.get(i).unwrap());
         println!("https://s.weibo.com{}", urls.get(i).unwrap());
