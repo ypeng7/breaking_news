@@ -2,7 +2,7 @@
  * File              : src/color.rs
  * Author            : Yue Peng <yuepaang@gmail.com>
  * Date              : 2019-07-23 17:34:10
- * Last Modified Date: 2019-07-23 17:34:10
+ * Last Modified Date: 2019-07-24 15:07:41
  * Last Modified By  : Yue Peng <yuepaang@gmail.com>
 
  */
