@@ -22,13 +22,11 @@ fn main() -> Result<(), Error> {
     let mut news = Vec::new();
     let mut urls = Vec::new();
     let resp = reqwest::get(requests_url).unwrap();
-    Document::from_read(resp)
-        .unwrap()
+    let document = Document::from_read(resp).unwrap();
+    document
         .find(Name("a"))
         .for_each(|x| news.push(x.text()));
-    let resp = reqwest::get(requests_url).unwrap();
-    Document::from_read(resp)
-        .unwrap()
+    document
         .find(Name("a"))
         .filter_map(|n| n.attr("href"))
         .for_each(|x| urls.push(x.to_string()));

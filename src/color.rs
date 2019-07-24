@@ -27,8 +27,6 @@ pub struct ColoredString {
 }
 
 pub trait Colorized {
-    const FG_RED: &'static str = "31";
-    const BG_YELLOW: &'static str = "43";
     fn red(self) -> ColoredString;
     fn yellow(self) -> ColoredString;
     fn blue(self) -> ColoredString;
