@@ -126,9 +126,9 @@ impl ColoredString {
         if let Some(ref bgcolor) = self.bgcolor {
             if has_wrote {
                 res.push(';');
-                res.push_str(bgcolor.to_bg_str());
-                has_wrote = true;
             }
+            res.push_str(bgcolor.to_bg_str());
+            has_wrote = true;
         }
 
         if let Some(ref fgcolor) = self.fgcolor {
