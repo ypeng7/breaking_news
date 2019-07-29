@@ -17,6 +17,15 @@ use reqwest::Error;
 use select::document::Document;
 use select::predicate::{Name};
 
+fn is_ad(text: String) -> bool {
+    let text_ref: &str = &text;
+    if text_ref == "javascript:void(0);" {
+        true
+    } else {
+        false
+    }
+}
+
 fn main() -> Result<(), Error> {
     let requests_url = "https://s.weibo.com/top/summary?cate=realtimehot";
     let mut news = Vec::new();
@@ -33,18 +42,23 @@ fn main() -> Result<(), Error> {
 
     println!("微博热搜榜Top20");
     println!("----------");
+    let mut cnt = 0;
     for i in 0..news.len() {
+        if cnt == 20 {
+            break;
+        }
         if i < 4 {
             continue;
         }
-        if i > 23 {
-            break;
+        if is_ad(String::from(urls.get(i).unwrap())) {
+            continue;
         }
         let topic = format!("{}. {}", i-3, news.get(i).unwrap()).to_string().on_color("yellow");
         println!("{}", topic);
         // println!("{}. {}", i-3, news.get(i).unwrap());
         println!("https://s.weibo.com{}", urls.get(i).unwrap());
         println!("\n");
+        cnt += 1;
     }
 
     let size: i32 = 10;
