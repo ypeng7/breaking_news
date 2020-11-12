@@ -13,7 +13,6 @@ mod color;
 
 use crate::color::Colorized;
 
-use reqwest::Error;
 use select::document::Document;
 use select::predicate::{Name};
 
@@ -26,12 +25,13 @@ fn is_ad(text: String) -> bool {
     }
 }
 
-fn main() -> Result<(), Error> {
+#[tokio::main]
+async fn main() -> Result<(), reqwest::Error> {
     let requests_url = "https://s.weibo.com/top/summary?cate=realtimehot";
     let mut news = Vec::new();
     let mut urls = Vec::new();
-    let resp = reqwest::get(requests_url).unwrap();
-    let document = Document::from_read(resp).unwrap();
+    let resp = reqwest::get(requests_url).await?.text().await?;
+    let document = Document::from_read(resp.as_bytes()).unwrap();
     document
         .find(Name("a"))
         .for_each(|x| news.push(x.text()));
@@ -177,3 +177,4 @@ fn main() -> Result<(), Error> {
 //             })
 //         }))
 // }
+
